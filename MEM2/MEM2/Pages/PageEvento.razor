@@ -1,0 +1,24 @@
+﻿@page "/EventoDetails/{Id}"
+
+@using MEM2.Data
+@using MEM2.Data.MEM2
+@inherits OwningComponentBase<EventoService>
+
+<h1> @Evento.Titulo </h1>
+
+<p><em>@Evento.Descricao</em></p>
+
+    
+
+@code{
+
+    [Parameter]
+    public string Id { get; set; }
+
+    Evento Evento = new Evento();
+    protected override async Task OnInitializedAsync()
+    {
+        Evento = await @Service.GetEvento(int.Parse(Id));
+    }
+
+}

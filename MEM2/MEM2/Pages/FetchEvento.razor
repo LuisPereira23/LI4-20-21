@@ -1,0 +1,42 @@
+﻿@page "/fetchEventos"
+@using MEM2.Data
+@using MEM2.Data.MEM2
+
+<h1> Eventos </h1>
+
+@inherits OwningComponentBase<EventoService>
+
+@if (Eventos == null)
+{
+    <!-- Show this if the current user has no data... yet... -->
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (var Evento in Eventos)
+    {
+<div class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">@Evento.Titulo</h5>
+                <p class="card-text">@Evento.Descricao</p>
+                <a href="/EventoDetails/@Evento.Id" class="card-link">Link</a>
+            </div>
+        </div>
+    </div>
+</div>
+    }
+    }
+
+    @code {
+        // AuthenticationState is available as a CascadingParameter
+        [CascadingParameter]
+        private Task<AuthenticationState>
+        authenticationStateTask{ get; set; }
+        List<Evento> Eventos;
+protected override async Task OnInitializedAsync()
+{
+    Eventos = await @Service.GetEventosAsync();
+}
+    }
