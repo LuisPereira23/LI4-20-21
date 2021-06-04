@@ -96,6 +96,13 @@ using MEM2.Data.MEM2;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "F:\LI4\MEM2\MEM2\MEM2\Pages\PageEvento.razor"
+using System.Diagnostics;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/EventoDetails/{Id}")]
     public partial class PageEvento : OwningComponentBase<EventoService>
     {
@@ -105,22 +112,55 @@ using MEM2.Data.MEM2;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 13 "F:\LI4\MEM2\MEM2\MEM2\Pages\PageEvento.razor"
+#line 31 "F:\LI4\MEM2\MEM2\MEM2\Pages\PageEvento.razor"
       
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
 
     [Parameter]
     public string Id { get; set; }
 
     Evento Evento = new Evento();
+
+    private bool load = false;
+
     protected override async Task OnInitializedAsync()
     {
         Evento = await @Service.GetEvento(int.Parse(Id));
+        load = true;
     }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+
+        if (load)
+        {
+            await JS.InvokeVoidAsync("loadBingMap", Evento.Latitude, Evento.Longitude);
+            load = false;
+        }
+
+
+    }
+
+
+    protected async Task FollowFunction() {
+
+        var user = (await authenticationStateTask).User;
+        Service.SetSeguido(user.Identity.Name, Evento.Id);
+
+    }
+
+
 
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JS { get; set; }
     }
 }
 #pragma warning restore 1591

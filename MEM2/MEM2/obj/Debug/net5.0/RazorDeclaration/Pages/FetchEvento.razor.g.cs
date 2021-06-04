@@ -105,18 +105,36 @@ using MEM2.Data.MEM2;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 32 "F:\LI4\MEM2\MEM2\MEM2\Pages\FetchEvento.razor"
-           
-        // AuthenticationState is available as a CascadingParameter
-        [CascadingParameter]
-        private Task<AuthenticationState>
-        authenticationStateTask{ get; set; }
-        List<Evento> Eventos;
-protected override async Task OnInitializedAsync()
-{
-    Eventos = await @Service.GetEventosAsync();
-}
-    
+#line 40 "F:\LI4\MEM2\MEM2\MEM2\Pages\FetchEvento.razor"
+       
+
+    private string Termo;
+
+    // AuthenticationState is available as a CascadingParameter
+    [CascadingParameter]
+    private Task<AuthenticationState>
+    authenticationStateTask
+    { get; set; }
+    List<Evento> Eventos;
+    protected override async Task OnInitializedAsync()
+    {
+        Eventos = await @Service.GetEventosAsync();
+    }
+
+    async Task SearchEventos()
+    {
+        Eventos = await Service.GetEventosAsyncFilter(Termo);
+
+    }
+
+    // Initialize SearchTerm to "" to prevent null's
+    string SearchTerm { get; set; } = "";
+
+    // Imagine this was retrieved from an API, just hardcoding for demo purposes
+
+    List<Evento> filteredEventos => Eventos.Where(i => ( i.Titulo .ToLower().Contains(SearchTerm.ToLower()) || i.Categoria.ToLower().Contains(SearchTerm.ToLower())) ).ToList();
+
+
 
 #line default
 #line hidden

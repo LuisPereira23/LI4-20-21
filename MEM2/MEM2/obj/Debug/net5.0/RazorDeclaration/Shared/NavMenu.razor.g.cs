@@ -90,7 +90,7 @@ using MEM2.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "F:\LI4\MEM2\MEM2\MEM2\Shared\NavMenu.razor"
+#line 23 "F:\LI4\MEM2\MEM2\MEM2\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 

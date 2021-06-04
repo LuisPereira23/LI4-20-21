@@ -13,30 +13,57 @@
 }
 else
 {
-    @foreach (var Evento in Eventos)
-    {
-<div class="row justify-content-center m-3">
-    <div class="col-sm-8">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">@Evento.Titulo</h5>
-                <p class="card-text">@Evento.Descricao</p>
-                <a href="/EventoDetails/@Evento.Id" class="card-link">Link</a>
+
+    <input @bind-value="SearchTerm" @bind-value:event="oninput" />
+    <span class="text-muted ml-5">
+        Showing @filteredEventos.Count out of @Eventos.Count
+    </span>
+    <ul>
+        @foreach (var Evento in filteredEventos)
+        {
+            <div class="row justify-content-center m-3">
+                <div class="col-sm-8">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Evento.Titulo</h5>
+                            <p class="card-text">@Evento.Descricao</p>
+                            <a href="/EventoDetails/@Evento.Id" class="card-link">Link</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-    }
+        }
+    </ul>
+
+}
+
+@code {
+
+    private string Termo;
+
+    // AuthenticationState is available as a CascadingParameter
+    [CascadingParameter]
+    private Task<AuthenticationState>
+    authenticationStateTask
+    { get; set; }
+    List<Evento> Eventos;
+    protected override async Task OnInitializedAsync()
+    {
+        Eventos = await @Service.GetEventosAsync();
     }
 
-    @code {
-        // AuthenticationState is available as a CascadingParameter
-        [CascadingParameter]
-        private Task<AuthenticationState>
-        authenticationStateTask{ get; set; }
-        List<Evento> Eventos;
-protected override async Task OnInitializedAsync()
-{
-    Eventos = await @Service.GetEventosAsync();
-}
+    async Task SearchEventos()
+    {
+        Eventos = await Service.GetEventosAsyncFilter(Termo);
+
     }
+
+    // Initialize SearchTerm to "" to prevent null's
+    string SearchTerm { get; set; } = "";
+
+    // Imagine this was retrieved from an API, just hardcoding for demo purposes
+
+    List<Evento> filteredEventos => Eventos.Where(i => ( i.Titulo .ToLower().Contains(SearchTerm.ToLower()) || i.Categoria.ToLower().Contains(SearchTerm.ToLower())) ).ToList();
+
+
+}
