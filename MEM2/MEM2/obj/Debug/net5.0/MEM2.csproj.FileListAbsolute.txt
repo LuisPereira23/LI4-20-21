@@ -198,3 +198,4 @@ F:\LI4\MEM2\MEM2\MEM2\obj\Debug\net5.0\MEM2.pdb
 F:\LI4\MEM2\MEM2\MEM2\obj\Debug\net5.0\MEM2.genruntimeconfig.cache
 F:\LI4\MEM2\MEM2\MEM2\obj\Debug\net5.0\RazorDeclaration\Pages\PageEvento.razor.g.cs
 F:\LI4\MEM2\MEM2\MEM2\obj\Debug\net5.0\Razor\Pages\PageEvento.razor.g.cs
+F:\LI4\MEM2\MEM2\MEM2\obj\Debug\net5.0\MEM2.csprojAssemblyReference.cache

@@ -15,10 +15,16 @@
 <p><em>@Evento.Inicio</em></p>
 <p><em>@Evento.Fim</em></p>
 
+
 <AuthorizeView>
     <!-- Show this section if the user is logged in -->
     <Authorized>
+        @if (on) {
+        <button @onclick="FollowFunction">Unfollow</button>
+        } else {
         <button @onclick="FollowFunction">Follow</button>
+        }
+         
 
     </Authorized>
     <!-- Show this section if the user is not logged in -->
@@ -33,17 +39,24 @@
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
 
+
     [Parameter]
     public string Id { get; set; }
 
     Evento Evento = new Evento();
 
     private bool load = false;
+    Boolean on;
 
     protected override async Task OnInitializedAsync()
     {
         Evento = await @Service.GetEvento(int.Parse(Id));
         load = true;
+        var user = (await authenticationStateTask).User;
+        bool On = Service.IsFollowing(user.Identity.Name, Evento.Id);
+        on = On;
+        Debug.WriteLine(On);
+
     }
 
 
@@ -61,13 +74,11 @@
     }
 
 
+
     protected async Task FollowFunction() {
 
         var user = (await authenticationStateTask).User;
-        Service.SetSeguido(user.Identity.Name, Evento.Id);
-
+        Service.SetSeguido(user.Identity.Name, Evento.Id,on);
+        on = !on;
     }
-
-
-
 }

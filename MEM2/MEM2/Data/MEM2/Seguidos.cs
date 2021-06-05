@@ -10,7 +10,7 @@ namespace MEM2.Data.MEM2
     {
         public int SeguidosId { get; set; }
         public string FkUtilizadorId { get; set; }
-        public int? FkEventoId { get; set; }
+        public int FkEventoId { get; set; }
 
         public virtual Evento FkEvento { get; set; }
         public virtual AspNetUsers FkUtilizador { get; set; }

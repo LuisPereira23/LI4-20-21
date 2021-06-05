@@ -18,22 +18,75 @@ else
     <span class="text-muted ml-5">
         Showing @filteredEventos.Count out of @Eventos.Count
     </span>
-    <ul>
-        @foreach (var Evento in filteredEventos)
-        {
-            <div class="row justify-content-center m-3">
-                <div class="col-sm-8">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">@Evento.Titulo</h5>
-                            <p class="card-text">@Evento.Descricao</p>
-                            <a href="/EventoDetails/@Evento.Id" class="card-link">Link</a>
-                        </div>
+
+    foreach (var Evento in Eventos)
+    {
+        if (Categorias.Contains(Evento.Categoria)) { } else { Categorias.Add(Evento.Categoria); }
+    }
+
+<select @bind="SearchTerm">
+
+    <option value="">All</option>
+    @foreach (var Categoria in Categorias)
+    {
+        <option value="@Categoria">@Categoria </option>
+    }
+</select>
+
+
+
+    <AuthorizeView>
+        <!-- Show this section if the user is logged in -->
+        <Authorized>
+
+            @if (on)
+            {
+                <button @onclick="FollowListMK">All</button>
+            }
+            else
+            {
+                <button @onclick="FollowListMK">Followed</button>
+            }
+
+
+        </Authorized>
+        <!-- Show this section if the user is not logged in -->
+    </AuthorizeView>
+
+    if (on) {
+<ul>
+    @foreach (var Evento in filteredEventosSeguidos)
+    {
+        <div class="row justify-content-center m-3">
+            <div class="col-sm-8">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@Evento.Titulo</h5>
+                        <p class="card-text">@Evento.Descricao</p>
+                        <a href="/EventoDetails/@Evento.Id" class="card-link">Link</a>
                     </div>
                 </div>
             </div>
-        }
-    </ul>
+        </div>
+    }
+</ul>} else {
+<ul>
+    @foreach (var Evento in filteredEventos)
+    {
+        <div class="row justify-content-center m-3">
+            <div class="col-sm-8">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@Evento.Titulo</h5>
+                        <p class="card-text">@Evento.Descricao</p>
+                        <a href="/EventoDetails/@Evento.Id" class="card-link">Link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</ul>}
+    
 
 }
 
@@ -44,7 +97,7 @@ else
     // AuthenticationState is available as a CascadingParameter
     [CascadingParameter]
     private Task<AuthenticationState>
-    authenticationStateTask
+authenticationStateTask
     { get; set; }
     List<Evento> Eventos;
     protected override async Task OnInitializedAsync()
@@ -60,10 +113,27 @@ else
 
     // Initialize SearchTerm to "" to prevent null's
     string SearchTerm { get; set; } = "";
+    string SearchCategoria { get; set; } = "Categoria";
+    string SearchSeguidos { get; set; } = "";
+
 
     // Imagine this was retrieved from an API, just hardcoding for demo purposes
 
-    List<Evento> filteredEventos => Eventos.Where(i => ( i.Titulo .ToLower().Contains(SearchTerm.ToLower()) || i.Categoria.ToLower().Contains(SearchTerm.ToLower())) ).ToList();
+    List<Evento> SeguidosEventos = new List<Evento>();
 
+    List<Evento> filteredEventos => Eventos.Where(i => (i.Titulo.ToLower().Contains(SearchTerm.ToLower()) || i.Categoria.ToLower().Contains(SearchTerm.ToLower()))).ToList();
+
+    List<string> Categorias = new List<string>();
+
+    Boolean on = false;
+
+    List<Evento> filteredEventosSeguidos => SeguidosEventos.Where(i => (i.Titulo.ToLower().Contains(SearchTerm.ToLower()) || i.Categoria.ToLower().Contains(SearchTerm.ToLower()))).ToList();
+
+    protected async Task FollowListMK()
+    {
+        var user = (await authenticationStateTask).User;
+        SeguidosEventos = await Service.GetListIdSeguido(user.Identity.Name);
+        on = !on;
+    }
 
 }

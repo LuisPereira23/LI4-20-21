@@ -105,7 +105,7 @@ using MEM2.Data.MEM2;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 40 "F:\LI4\MEM2\MEM2\MEM2\Pages\FetchEvento.razor"
+#line 93 "F:\LI4\MEM2\MEM2\MEM2\Pages\FetchEvento.razor"
        
 
     private string Termo;
@@ -113,7 +113,7 @@ using MEM2.Data.MEM2;
     // AuthenticationState is available as a CascadingParameter
     [CascadingParameter]
     private Task<AuthenticationState>
-    authenticationStateTask
+authenticationStateTask
     { get; set; }
     List<Evento> Eventos;
     protected override async Task OnInitializedAsync()
@@ -129,11 +129,28 @@ using MEM2.Data.MEM2;
 
     // Initialize SearchTerm to "" to prevent null's
     string SearchTerm { get; set; } = "";
+    string SearchCategoria { get; set; } = "Categoria";
+    string SearchSeguidos { get; set; } = "";
+
 
     // Imagine this was retrieved from an API, just hardcoding for demo purposes
 
-    List<Evento> filteredEventos => Eventos.Where(i => ( i.Titulo .ToLower().Contains(SearchTerm.ToLower()) || i.Categoria.ToLower().Contains(SearchTerm.ToLower())) ).ToList();
+    List<Evento> SeguidosEventos = new List<Evento>();
 
+    List<Evento> filteredEventos => Eventos.Where(i => (i.Titulo.ToLower().Contains(SearchTerm.ToLower()) || i.Categoria.ToLower().Contains(SearchTerm.ToLower()))).ToList();
+
+    List<string> Categorias = new List<string>();
+
+    Boolean on = false;
+
+    List<Evento> filteredEventosSeguidos => SeguidosEventos.Where(i => (i.Titulo.ToLower().Contains(SearchTerm.ToLower()) || i.Categoria.ToLower().Contains(SearchTerm.ToLower()))).ToList();
+
+    protected async Task FollowListMK()
+    {
+        var user = (await authenticationStateTask).User;
+        SeguidosEventos = await Service.GetListIdSeguido(user.Identity.Name);
+        on = !on;
+    }
 
 
 #line default

@@ -1,7 +1,42 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@using MEM2.Data
+@using MEM2.Data.MEM2
+@using System.Diagnostics
 
-Welcome to your new app.
+@inherits OwningComponentBase<EventoService>
+@inject IJSRuntime JS
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div>@DateTime.Now</div>
+
+<AuthorizeView>
+    <!-- Show this section if the user is logged in -->
+    <Authorized>
+        @if (on) { 
+        <h1>@DateTime.Now</h1>
+        }
+
+    </Authorized>
+    <!-- Show this section if the user is not logged in -->
+</AuthorizeView>
+
+
+
+
+@code{
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    Boolean on;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var user = (await authenticationStateTask).User;
+       // on = Service.ScheduleAction(user.Identity.Name).Result;
+
+
+    }
+
+}

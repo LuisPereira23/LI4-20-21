@@ -112,11 +112,12 @@ using System.Diagnostics;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 31 "F:\LI4\MEM2\MEM2\MEM2\Pages\PageEvento.razor"
+#line 37 "F:\LI4\MEM2\MEM2\MEM2\Pages\PageEvento.razor"
       
 
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
+
 
     [Parameter]
     public string Id { get; set; }
@@ -124,11 +125,17 @@ using System.Diagnostics;
     Evento Evento = new Evento();
 
     private bool load = false;
+    Boolean on;
 
     protected override async Task OnInitializedAsync()
     {
         Evento = await @Service.GetEvento(int.Parse(Id));
         load = true;
+        var user = (await authenticationStateTask).User;
+        bool On = Service.IsFollowing(user.Identity.Name, Evento.Id);
+        on = On;
+        Debug.WriteLine(On);
+
     }
 
 
@@ -146,15 +153,13 @@ using System.Diagnostics;
     }
 
 
+
     protected async Task FollowFunction() {
 
         var user = (await authenticationStateTask).User;
-        Service.SetSeguido(user.Identity.Name, Evento.Id);
-
+        Service.SetSeguido(user.Identity.Name, Evento.Id,on);
+        on = !on;
     }
-
-
-
 
 #line default
 #line hidden

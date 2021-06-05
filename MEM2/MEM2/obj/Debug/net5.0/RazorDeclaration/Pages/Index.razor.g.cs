@@ -82,14 +82,58 @@ using MEM2.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "F:\LI4\MEM2\MEM2\MEM2\Pages\Index.razor"
+using MEM2.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 4 "F:\LI4\MEM2\MEM2\MEM2\Pages\Index.razor"
+using MEM2.Data.MEM2;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "F:\LI4\MEM2\MEM2\MEM2\Pages\Index.razor"
+using System.Diagnostics;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
-    public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class Index : OwningComponentBase<EventoService>
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 27 "F:\LI4\MEM2\MEM2\MEM2\Pages\Index.razor"
+      
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    Boolean on;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var user = (await authenticationStateTask).User;
+       // on = Service.ScheduleAction(user.Identity.Name).Result;
+
+
+    }
+
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JS { get; set; }
     }
 }
 #pragma warning restore 1591

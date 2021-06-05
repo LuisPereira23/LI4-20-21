@@ -18,10 +18,10 @@ namespace MEM2.Data.MEM2
         public string Descricao { get; set; }
         public string Titulo { get; set; }
         public string Categoria { get; set; }
-        public DateTime? Inicio { get; set; }
-        public DateTime? Fim { get; set; }
-        public Double Latitude { get; set; }
-        public Double Longitude { get; set; }
+        public DateTime Inicio { get; set; }
+        public DateTime Fim { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
 
         public virtual ICollection<Notificacao> Notificacao { get; set; }
         public virtual ICollection<Seguidos> Seguidos { get; set; }
