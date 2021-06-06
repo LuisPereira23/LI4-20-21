@@ -1,12 +1,11 @@
 ﻿CREATE TABLE [dbo].[Evento] (
     [Id]        INT           NOT NULL,
-    [Descricao] VARCHAR (300) NULL,
-    [Titulo]    VARCHAR (30)  NULL,
-    [Categoria] VARCHAR (30)  NULL,
-    [Inicio]    DATE          NULL,
-    [Fim]       DATE          NULL,
-    [Latitude]  VARCHAR (30)  NULL,
-    [Longitude] VARCHAR (30)  NULL,
+    [Descricao] VARCHAR (MAX) NULL,
+    [Titulo]    VARCHAR (50)  NULL,
+    [Categoria] VARCHAR (50)  NULL,
+    [Inicio]    DATETIME      NULL,
+    [Fim]       DATETIME      NULL,
+    [Latitude]  FLOAT (53)    NULL,
+    [Longitude] FLOAT (53)    NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
