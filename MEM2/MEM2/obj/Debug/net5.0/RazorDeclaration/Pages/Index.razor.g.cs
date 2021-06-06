@@ -84,20 +84,34 @@ using MEM2.Shared;
 #nullable disable
 #nullable restore
 #line 3 "F:\LI4\MEM2\MEM2\MEM2\Pages\Index.razor"
-using MEM2.Data;
+using MEM2.Config;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "F:\LI4\MEM2\MEM2\MEM2\Pages\Index.razor"
-using MEM2.Data.MEM2;
+using MEM2.Services;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "F:\LI4\MEM2\MEM2\MEM2\Pages\Index.razor"
+using MEM2.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "F:\LI4\MEM2\MEM2\MEM2\Pages\Index.razor"
+using MEM2.Data.MEM2;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "F:\LI4\MEM2\MEM2\MEM2\Pages\Index.razor"
 using System.Diagnostics;
 
 #line default
@@ -112,7 +126,7 @@ using System.Diagnostics;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 27 "F:\LI4\MEM2\MEM2\MEM2\Pages\Index.razor"
+#line 31 "F:\LI4\MEM2\MEM2\MEM2\Pages\Index.razor"
       
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
@@ -123,7 +137,7 @@ using System.Diagnostics;
     {
 
         var user = (await authenticationStateTask).User;
-       // on = Service.ScheduleAction(user.Identity.Name).Result;
+        // on = Service.ScheduleAction(user.Identity.Name).Result;
 
 
     }
@@ -134,6 +148,7 @@ using System.Diagnostics;
 #nullable disable
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JS { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private MEM2.Services.IToastService toastService { get; set; }
     }
 }
 #pragma warning restore 1591

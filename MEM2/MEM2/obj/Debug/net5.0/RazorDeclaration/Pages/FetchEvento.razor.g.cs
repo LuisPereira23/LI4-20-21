@@ -105,7 +105,7 @@ using MEM2.Data.MEM2;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 93 "F:\LI4\MEM2\MEM2\MEM2\Pages\FetchEvento.razor"
+#line 116 "F:\LI4\MEM2\MEM2\MEM2\Pages\FetchEvento.razor"
        
 
     private string Termo;

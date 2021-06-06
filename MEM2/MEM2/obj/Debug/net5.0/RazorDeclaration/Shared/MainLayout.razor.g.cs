@@ -82,6 +82,20 @@ using MEM2.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 2 "F:\LI4\MEM2\MEM2\MEM2\Shared\MainLayout.razor"
+using MEM2.Pages;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 3 "F:\LI4\MEM2\MEM2\MEM2\Shared\MainLayout.razor"
+using MEM2.Config;
+
+#line default
+#line hidden
+#nullable disable
     public partial class MainLayout : LayoutComponentBase
     {
         #pragma warning disable 1998

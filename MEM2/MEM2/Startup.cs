@@ -1,5 +1,6 @@
 using MEM2.Areas.Identity;
 using MEM2.Data;
+using MEM2.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -45,6 +46,7 @@ namespace MEM2
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddScoped<MEM2.Data.MEM2.Evento>();
             services.AddScoped<MEM2.Data.EventoService>();
+            services.AddScoped<IToastService, ToastService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

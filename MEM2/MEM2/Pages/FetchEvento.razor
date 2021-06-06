@@ -14,8 +14,9 @@
 else
 {
 
-    <input @bind-value="SearchTerm" @bind-value:event="oninput" />
-    <span class="text-muted ml-5">
+    <input class="search" placeholder="Search.." @bind-value="SearchTerm" @bind-value:event="oninput" />
+
+    <span class="text-muted ml-5 ">
         Showing @filteredEventos.Count out of @Eventos.Count
     </span>
 
@@ -24,12 +25,13 @@ else
         if (Categorias.Contains(Evento.Categoria)) { } else { Categorias.Add(Evento.Categoria); }
     }
 
-<select @bind="SearchTerm">
+<select class="RbtnMargin" @bind="SearchTerm">
 
-    <option value="">All</option>
+    <option  value="">All</option>
+
     @foreach (var Categoria in Categorias)
     {
-        <option value="@Categoria">@Categoria </option>
+        <option class="" value="@Categoria">@Categoria </option>
     }
 </select>
 
@@ -41,11 +43,11 @@ else
 
             @if (on)
             {
-                <button @onclick="FollowListMK">All</button>
+                <button class="btn btn-outline-dark RbtnMargin " @onclick="FollowListMK">All</button>
             }
             else
             {
-                <button @onclick="FollowListMK">Followed</button>
+                <button class="btn btn-outline-dark RbtnMargin  " @onclick="FollowListMK">Followed</button>
             }
 
 
@@ -53,42 +55,63 @@ else
         <!-- Show this section if the user is not logged in -->
     </AuthorizeView>
 
+    
+
     if (on) {
 <ul>
-    @foreach (var Evento in filteredEventosSeguidos)
-    {
-        <div class="row justify-content-center m-3">
-            <div class="col-sm-8">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">@Evento.Titulo</h5>
-                        <p class="card-text">@Evento.Descricao</p>
-                        <a href="/EventoDetails/@Evento.Id" class="card-link">Link</a>
-                    </div>
+    <div class="card-columns TopMargin">
+        @foreach (var Evento in filteredEventosSeguidos)
+        {
+            <div class="card bg-light mb-3" style="height: 12rem;">
+                <div class="card-header text-white bg-primary">Event</div>
+                <div class="card-body">
+                    <h5 class="card-title">@Evento.Titulo</h5>
+                    <a href="/EventoDetails/@Evento.Id" class="card-link">Link</a>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </ul>} else {
 <ul>
-    @foreach (var Evento in filteredEventos)
-    {
-        <div class="row justify-content-center m-3">
-            <div class="col-sm-8">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">@Evento.Titulo</h5>
-                        <p class="card-text">@Evento.Descricao</p>
-                        <a href="/EventoDetails/@Evento.Id" class="card-link">Link</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
+    <div class="card-columns TopMargin">
+        @foreach (var Evento in filteredEventos)
+        {
+         <div class="card bg-light mb-3" style="height: 12rem;" >
+             <div class="card-header text-white bg-primary">Event</div>
+                  <div class="card-body">
+                       <h5 class="card-title">@Evento.Titulo</h5>
+                       <a href="/EventoDetails/@Evento.Id" class="card-link">Link</a>
+             </div>
+         </div>
+        }
+    </div>
 </ul>}
     
 
 }
+
+<style>
+    .RbtnMargin {
+        margin-left: 20px;
+    }
+
+    .TopMargin {
+        margin-top: 40px;
+    }
+
+    .search {
+        width: 308.9999999999999px;
+        height: 35.976653696498005px;
+        font-family: Arial;
+        font-size: 14.0px;
+        font-weight: 400;
+        color: #000000;
+        background-color: #FFFFFF;
+        border: 1px solid #C8C8C8;
+        border-radius: 0px;
+        padding-left: 5px;
+    }
+</style>
 
 @code {
 
